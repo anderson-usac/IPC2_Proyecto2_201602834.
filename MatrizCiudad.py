@@ -126,7 +126,7 @@ class Matriz:
             print("|")
             nodo_act = nodo_act.siguiente
 
-    def graficarterreno(self):
+    def graficarciudad(self):
         grap='''digraph T{ node[shape=circle fontname="Arial" fillcolor="white" style=filled ]
             root[label = "raiz"]
             subgraph cluster_p{\n'''

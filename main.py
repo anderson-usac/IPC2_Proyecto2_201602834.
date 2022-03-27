@@ -7,9 +7,49 @@ from MatrizCiudad import Matriz
 
 
 
+MatrizC=Matriz()
 
+
+class Nodo:
+    def __init__(self,nombre, filas,columnas):
+        self.nombre=nombre
+        self.filas=filas
+        self.columnas=columnas
+        self.sig=None
+
+class ListaSimple:
+    def __init__(self):
+        self.cabeza=None
+        self.size=0
+    def insertar(self,nombre,filas,columnas):
+        if not self.cabeza:
+            self.cabeza=Nodo(nombre, filas,columnas)
+            self.size+=1
+            return
+        actual=self.cabeza
+        while actual.sig:
+            actual=actual.sig
+        actual.sig=Nodo(nombre, filas,columnas)
+        self.size+=1
+    def buscar(self, nombre):
+        actual = self.cabeza
+        while actual != None:
+            if nombre == actual.nombre:
+                return actual
+            actual = actual.sig   
+
+    def imprimir (self):
+        nodo=self.cabeza
+        while nodo!=None:
+            print('Nombre: '+nodo.nombre,'filas: '+nodo.filas,'columnas: '+nodo.columnas)
+            nodo=nodo.sig
+listaciudades=ListaSimple()
 def readfile(ruta):
+    global listacad
+    listacad=[]
     with open(ruta,'r',encoding='utf-8') as file:
+        cont=0
+        cont1=0
         xml_doc=file.read()
         root=ET.fromstring(xml_doc)
         for tag in root:
@@ -20,12 +60,14 @@ def readfile(ruta):
                             ciudad=subele.text
                             filas=subele.attrib.get('filas')
                             columnas=subele.attrib.get('columnas')
+                            listaciudades.insertar(ciudad,filas,columnas)
                         elif subele.tag=='fila':
                             ff1=subele.text
                             cadfila=ff1.strip('"')
                             fila=subele.attrib.get('numero')
+    listaciudades.imprimir()                            
                             
-                            print(fila)
+                            
 
                             
 
