@@ -7,29 +7,28 @@ from MatrizCiudad import Matriz
 
 
 
-MatrizC=Matriz()
-
-
 class Nodo:
     def __init__(self,nombre, filas,columnas):
         self.nombre=nombre
         self.filas=filas
         self.columnas=columnas
+        self.matrizc=Matriz()
         self.sig=None
-
 class ListaSimple:
     def __init__(self):
         self.cabeza=None
         self.size=0
-    def insertar(self,nombre,filas,columnas):
+    def insertar(self,nombre,filas,columnas,matriz):
+        nuevo=Nodo(nombre, filas,columnas)
+        nuevo.matrizc=matriz
         if not self.cabeza:
-            self.cabeza=Nodo(nombre, filas,columnas)
+            self.cabeza=nuevo
             self.size+=1
             return
         actual=self.cabeza
         while actual.sig:
             actual=actual.sig
-        actual.sig=Nodo(nombre, filas,columnas)
+        actual.sig=nuevo
         self.size+=1
     def buscar(self, nombre):
         actual = self.cabeza
@@ -41,11 +40,11 @@ class ListaSimple:
     def imprimir (self):
         nodo=self.cabeza
         while nodo!=None:
-            print('Nombre: '+nodo.nombre,'filas: '+nodo.filas,'columnas: '+nodo.columnas)
+            print(nodo.nombre,nodo.filas,nodo.columnas,nodo.matrizc.recorrer())
             nodo=nodo.sig
 listaciudades=ListaSimple()
 def readfile(ruta):
-    global listacad
+    global listacad,ciudad,filas,columnas
     listacad=[]
     with open(ruta,'r',encoding='utf-8') as file:
         cont=0
@@ -55,16 +54,23 @@ def readfile(ruta):
         for tag in root:
             if tag.tag=='listaCiudades':
                 for stag in tag:
+                    MatrizC=Matriz()
                     for subele in stag:
                         if subele.tag=='nombre':
                             ciudad=subele.text
                             filas=subele.attrib.get('filas')
                             columnas=subele.attrib.get('columnas')
-                            listaciudades.insertar(ciudad,filas,columnas)
+                            #listaciudades.insertar(ciudad,filas,columnas)
                         elif subele.tag=='fila':
                             ff1=subele.text
                             cadfila=ff1.strip('"')
                             fila=subele.attrib.get('numero')
+                            listcad=list(cadfila)
+                            for c in range(len(cadfila)):
+                                MatrizC.insertar(ciudad,int(fila),int(c),cadfila[c])
+                    listaciudades.insertar(ciudad,filas,columnas,MatrizC)
+                            
+                            
     listaciudades.imprimir()                            
                             
                             
