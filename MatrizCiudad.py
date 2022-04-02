@@ -116,6 +116,17 @@ class Matriz:
                 actual=actual.abajo
             encabezadoc=encabezadoc.siguiente
 
+    def modificar(self,fila,columna,nuevo):
+        encabezadoc=self.encabezadoc.primero
+        while encabezadoc !=None:
+            actual=encabezadoc.acceso
+            while actual !=None:
+                if actual.fila==fila and actual.columna==columna:
+                    actual.atributo=nuevo
+                actual=actual.abajo
+            encabezadoc=encabezadoc.siguiente
+
+
     def recorrer(self):
         nodo_act = self.encabezadof.primero
         while nodo_act is not None:
@@ -224,3 +235,13 @@ class Matriz:
         print('')
         print("Ahorita te lo abro XD")
         webbrowser.open(hol)
+
+if __name__ == "__main__":
+    MatrizH=Matriz()
+    MatrizH.insertar('C1',8,5,'AA')
+    MatrizH.insertar('C1',6,5,'**')
+    MatrizH.insertar('C1',2,3,'**')
+    MatrizH.insertar('C1',7,4,'JJ')
+    MatrizH.modificar('8','5','AZ')
+    MatrizH.recorrer()
+

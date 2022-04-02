@@ -4,6 +4,7 @@ import tkinter.filedialog
 from xml.etree import ElementTree as ET
 from xml.dom import minidom
 from MatrizCiudad import Matriz
+from ListaUM import ListaSimpleUM
 
 
 
@@ -43,9 +44,10 @@ class ListaSimple:
             print(nodo.nombre,nodo.filas,nodo.columnas,nodo.matrizc.recorrer())
             nodo=nodo.sig
 listaciudades=ListaSimple()
+listaUM=ListaSimpleUM()
 def readfile(ruta):
-    global listacad,ciudad,filas,columnas
-    listacad=[]
+    global listcad,cadfila,ciudad,filas,columnas,capum,ffum,ccum
+    cadfila=[]
     with open(ruta,'r',encoding='utf-8') as file:
         cont=0
         cont1=0
@@ -68,6 +70,13 @@ def readfile(ruta):
                             listcad=list(cadfila)
                             for c in range(len(cadfila)):
                                 MatrizC.insertar(ciudad,int(fila),int(c),cadfila[c])
+                        elif subele.tag=='unidadMilitar':
+                            capum=subele.text
+                            ffum=subele.attrib.get('fila')
+                            ccum=subele.attrib.get('columna')
+                            MatrizC.modificar(int(ffum),int(ccum),capum)
+                            
+                            
                     listaciudades.insertar(ciudad,filas,columnas,MatrizC)
                             
                             
