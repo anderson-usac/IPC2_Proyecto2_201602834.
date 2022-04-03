@@ -7,7 +7,7 @@ from MatrizCiudad import Matriz
 from ListaUM import ListaSimpleUM
 
 
-
+MatrizJ=Matriz()
 class Nodo:
     def __init__(self,nombre, filas,columnas):
         self.nombre=nombre
@@ -56,6 +56,7 @@ def readfile(ruta):
         for tag in root:
             if tag.tag=='listaCiudades':
                 for stag in tag:
+                    global MatrizC
                     MatrizC=Matriz()
                     for subele in stag:
                         if subele.tag=='nombre':
@@ -69,7 +70,7 @@ def readfile(ruta):
                             fila=subele.attrib.get('numero')
                             listcad=list(cadfila)
                             for c in range(len(cadfila)):
-                                MatrizC.insertar(ciudad,int(fila),int(c),cadfila[c])
+                                MatrizC.insertar(ciudad,int(fila),int(c)+1,cadfila[c])
                         elif subele.tag=='unidadMilitar':
                             capum=subele.text
                             ffum=subele.attrib.get('fila')
@@ -120,7 +121,7 @@ def menu():
         elif opcion==3:
            pass
         elif opcion==4:
-            pass
+            MatrizC.graficarciudad()
         elif opcion==5:
             exit()
         else:

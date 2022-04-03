@@ -1,5 +1,6 @@
 import os
 import webbrowser
+from NodosEncabezado import listaencabezado,nodoencabezado
 class Nodoi(): #Nodo que guarda las cantidades de combustible
     def __init__(self,fila,columna,atributo):
         self.atributo=atributo
@@ -9,45 +10,7 @@ class Nodoi(): #Nodo que guarda las cantidades de combustible
         self.izquierda=None
         self.abajo=None
         self.arriba=None
-class nodoencabezado: #lista doble enlazada para las cabeceras
-    def __init__(self,id):
-        self.id=id
-        self.siguiente=None
-        self.anterior=None
-        self.acceso=None
-    
-class listaencabezado:
-    def __init__(self,primero=None):
-        self.primero=primero
-    
-                
-    def crearencabezado(self,nuevo):
-        if (self.primero==None):
-            self.primero=nuevo
-        elif(nuevo.id < self.primero.id):
-            nuevo.siguiente=self.primero
-            self.primero.anterior=nuevo
-            self.primero=nuevo
-        else:
-            actual=self.primero
-            while actual.siguiente !=None:
-                if(nuevo.id<actual.siguiente.id):
-                    nuevo.siguiente=actual.siguiente
-                    actual.siguiente.anterior=nuevo
-                    nuevo.anterior=actual
-                    actual.siguiente=nuevo
-                    break
-                actual=actual.siguiente
-            if(actual.siguiente==None):
-                actual.siguiente=nuevo
-                nuevo.anterior=actual
-    def obtenerencabezado(self,id): #retorna el numero de encabezados
-        actual = self.primero
-        while actual != None:
-            if actual.id == id:
-                return actual
-            actual = actual.siguiente
-        return None
+
 class Matriz:
     def __init__(self):
         self.encabezadof=listaencabezado()
@@ -138,7 +101,7 @@ class Matriz:
             nodo_act = nodo_act.siguiente
 
     def graficarciudad(self):
-        grap='''digraph T{ node[shape=circle fontname="Arial" fillcolor="white" style=filled ]
+        grap='''digraph T{ node[shape=box fontname="Arial" fillcolor="white" style=filled ]
             root[label = "raiz"]
             subgraph cluster_p{\n'''
         grap+='''\t\t\t\tlabel = "{}"
@@ -184,7 +147,7 @@ class Matriz:
         while aux != None:
             cont+=1
             while aux2 != None:
-                grap+='N{}_{}[label="{}",group="{}"];\n'.format(aux2.fila,aux2.columna,aux2.combustible,int(aux2.columna)+1)
+                grap+='N{}_{}[label="{}",group="{}"];\n'.format(aux2.fila,aux2.columna,aux2.atributo,int(aux2.columna)+1)
                 aux2=aux2.derecha
             aux=aux.siguiente
             if aux !=None:
@@ -242,6 +205,7 @@ if __name__ == "__main__":
     MatrizH.insertar('C1',6,5,'**')
     MatrizH.insertar('C1',2,3,'**')
     MatrizH.insertar('C1',7,4,'JJ')
-    MatrizH.modificar('8','5','AZ')
+    #MatrizH.modificar('8','5','AZ')
     MatrizH.recorrer()
+    MatrizH.graficarciudad()
 
