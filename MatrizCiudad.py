@@ -147,7 +147,20 @@ class Matriz:
         while aux != None:
             cont+=1
             while aux2 != None:
-                grap+='N{}_{}[label="{}",group="{}"];\n'.format(aux2.fila,aux2.columna,aux2.atributo,int(aux2.columna)+1)
+                val=aux2.atributo
+                if val=='*':
+                    color='black'
+                elif val=='R':
+                    color='gray'
+                elif val=='C':
+                    color='blue'
+                elif val=='E':
+                    color='green'
+                elif val.isdigit():
+                    color='red'
+                else:
+                    color='white'
+                grap+='N{}_{}[label="{}",fillcolor="{}",group="{}"];\n'.format(aux2.fila,aux2.columna,aux2.atributo,color,int(aux2.columna)+1)
                 aux2=aux2.derecha
             aux=aux.siguiente
             if aux !=None:
@@ -196,7 +209,7 @@ class Matriz:
         hol="matriz.jpg"
         os.system("dot -Tjpg " +hola+  " -o "+hol)
         print('')
-        print("Ahorita te lo abro XD")
+        print("Ahorita te lo abro Jefecito XD")
         webbrowser.open(hol)
 
 if __name__ == "__main__":
