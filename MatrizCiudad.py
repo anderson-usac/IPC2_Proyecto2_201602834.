@@ -100,48 +100,50 @@ class Matriz:
             print("|")
             nodo_act = nodo_act.siguiente
 
-    def graficarciudad(self):
+    def graficarciudad(self,nombre,matriz):
+        matriz.recorrer()
         grap='''digraph T{ node[shape=box fontname="Arial" fillcolor="white" style=filled ]
             root[label = "raiz"]
             subgraph cluster_p{\n'''
         grap+='''\t\t\t\tlabel = "{}"
                 fontname="Arial Black"
                 fontsize="20pt"
-                edge[dir="none"]\n'''.format(self.nombre)
-        hfilas=self.encabezadof.primero
+                ranksep="0 equally"
+                edge[dir="none"]\n'''.format(nombre)
+        hfilas=matriz.encabezadof.primero
         while hfilas != None:
             grap+='F{}[label="{}",fillcolor="skyblue",group=1];\n'.format(hfilas.id,hfilas.id)
             hfilas= hfilas.siguiente
 
-        hfilas=self.encabezadof.primero
+        hfilas=matriz.encabezadof.primero
         while hfilas !=None:
             if hfilas.siguiente!=None:
                 grap+='F{}->F{};\n'.format(hfilas.id,hfilas.siguiente.id)
             hfilas=hfilas.siguiente
-        hcolumnas=self.encabezadoc.primero
+        hcolumnas=matriz.encabezadoc.primero
         while hcolumnas!=None:
             group=int(hcolumnas.id)+1
             grap+='C{}[label="{}",fillcolor="yellow",group={}];\n'.format(hcolumnas.id,hcolumnas.id,str(group))
             hcolumnas=hcolumnas.siguiente
         cont=0
-        hcolumnas=self.encabezadoc.primero
+        hcolumnas=matriz.encabezadoc.primero
         while hcolumnas is not None:
             if hcolumnas.siguiente is not None:
                 grap+='C{}->C{}\n'.format(hcolumnas.id,hcolumnas.siguiente.id)
             cont+=1
             hcolumnas=hcolumnas.siguiente
-        hcolumnas=self.encabezadoc.primero
-        hfilas=self.encabezadof.primero
+        hcolumnas=matriz.encabezadoc.primero
+        hfilas=matriz.encabezadof.primero
         grap+='root->F{};\n root->C{};\n'.format(hfilas.id,hcolumnas.id)
         grap+='{rank=same;root;'
         cont=0
-        hcolumnas=self.encabezadoc.primero
+        hcolumnas=matriz.encabezadoc.primero
         while hcolumnas != None:
             grap+='C{};'.format(hcolumnas.id)
             cont+=1
             hcolumnas=hcolumnas.siguiente
         grap+='}\n'
-        aux=self.encabezadof.primero
+        aux=matriz.encabezadof.primero
         aux2=aux.acceso
         cont=0
         while aux != None:
@@ -165,7 +167,7 @@ class Matriz:
             aux=aux.siguiente
             if aux !=None:
                 aux2=aux.acceso
-        aux=self.encabezadof.primero
+        aux=matriz.encabezadof.primero
         aux2=aux.acceso
         cont=0
         while aux is not None:
@@ -184,7 +186,7 @@ class Matriz:
             if aux != None:
                 aux2 = aux.acceso
             grap+= rank+'}\n' 
-        aux=self.encabezadoc.primero
+        aux=matriz.encabezadoc.primero
         aux2=aux.acceso
         cont=0
         while aux!=None:
@@ -202,23 +204,23 @@ class Matriz:
                 aux2 = aux.acceso
         grap += '}\n}'
 
-        filegrap=open('grafica.txt','w')
+        filegrap=open('{}.txt'.format(nombre),'w')
         filegrap.write(grap)
         filegrap.close()
-        hola="grafica.txt"
-        hol="matriz.jpg"
+        hola="{}.txt".format(nombre)
+        hol="{}.jpg".format(nombre)
         os.system("dot -Tjpg " +hola+  " -o "+hol)
         print('')
         print("Ahorita te lo abro Jefecito XD")
         webbrowser.open(hol)
 
-if __name__ == "__main__":
-    MatrizH=Matriz()
-    MatrizH.insertar('C1',8,5,'AA')
-    MatrizH.insertar('C1',6,5,'**')
-    MatrizH.insertar('C1',2,3,'**')
-    MatrizH.insertar('C1',7,4,'JJ')
-    #MatrizH.modificar('8','5','AZ')
-    MatrizH.recorrer()
-    MatrizH.graficarciudad()
+# if __name__ == "__main__":
+#     MatrizH=Matriz()
+#     MatrizH.insertar('C1',8,5,'AA')
+#     MatrizH.insertar('C1',6,5,'**')
+#     MatrizH.insertar('C1',2,3,'**')
+#     MatrizH.insertar('C1',7,4,'JJ')
+#     MatrizH.modificar('8','5','AZ')
+#     MatrizH.recorrer()
+#     MatrizH.graficarciudad()
 

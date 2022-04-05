@@ -7,7 +7,6 @@ from MatrizCiudad import Matriz
 from ListaUM import ListaSimpleUM
 
 
-MatrizJ=Matriz()
 class Nodo:
     def __init__(self,nombre, filas,columnas):
         self.nombre=nombre
@@ -35,7 +34,7 @@ class ListaSimple:
         actual = self.cabeza
         while actual != None:
             if nombre == actual.nombre:
-                return actual
+                return actual.matrizc
             actual = actual.sig   
 
     def imprimir (self):
@@ -43,8 +42,9 @@ class ListaSimple:
         while nodo!=None:
             print(nodo.nombre,nodo.filas,nodo.columnas,nodo.matrizc.recorrer())
             nodo=nodo.sig
+
 listaciudades=ListaSimple()
-listaUM=ListaSimpleUM()
+listarobots=ListaSimpleUM()  
 def readfile(ruta):
     global listcad,cadfila,ciudad,filas,columnas,capum,ffum,ccum
     cadfila=[]
@@ -79,11 +79,25 @@ def readfile(ruta):
                             
                             
                     listaciudades.insertar(ciudad,filas,columnas,MatrizC)
+            elif tag.tag=='robots':
+                for subtag in tag:
+                    for sstag in subtag:
+                        if sstag.tag=='nombre':
+                            tipo=sstag.attrib.get('tipo')
+                            capacidad=sstag.attrib.get('capacidad')
+                            nombrer=sstag.text
+                            listarobots.insertar(nombrer,tipo,capacidad)                
                             
+    listaciudades.imprimir()
+    listarobots.imprimir()
+    
+                              
                             
-    listaciudades.imprimir()                            
-                            
-                            
+def graficar():
+    nombre=input('Ingrese nombre de la ciudad:')
+    matrizaux=listaciudades.buscar(nombre)
+    MatrizC.graficarciudad(nombre,matrizaux)
+                 
 
                             
 
@@ -121,7 +135,7 @@ def menu():
         elif opcion==3:
            pass
         elif opcion==4:
-            MatrizC.graficarciudad()
+            graficar()
         elif opcion==5:
             exit()
         else:
