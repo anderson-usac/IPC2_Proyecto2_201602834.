@@ -1,6 +1,8 @@
 import os
 import webbrowser
 from NodosEncabezado import listaencabezado,nodoencabezado
+from ListaUM import ListaSimpleUM
+listarobots=ListaSimpleUM()
 class Nodoi(): #Nodo que guarda las cantidades de combustible
     def __init__(self,fila,columna,atributo):
         self.atributo=atributo
@@ -214,13 +216,7 @@ class Matriz:
         print("Ahorita te lo abro Jefecito XD")
         webbrowser.open(hol)
 
-# if __name__ == "__main__":
-#     MatrizH=Matriz()
-#     MatrizH.insertar('C1',8,5,'AA')
-#     MatrizH.insertar('C1',6,5,'**')
-#     MatrizH.insertar('C1',2,3,'**')
-#     MatrizH.insertar('C1',7,4,'JJ')
-#     MatrizH.modificar('8','5','AZ')
-#     MatrizH.recorrer()
-#     MatrizH.graficarciudad()
+
+        
+
 

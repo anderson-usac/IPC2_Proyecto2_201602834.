@@ -19,11 +19,18 @@ class ListaSimpleUM:
             actual=actual.sig
         actual.sig=nuevo
         self.size+=1
-    def buscar(self,nombre):
+    def buscar(self,tipo):
+        actual = self.cabeza
+        while actual != None:
+            if tipo == actual.tipo:
+                return actual.nombre, actual.capacidad
+            actual = actual.sig
+
+    def buscar2(self,nombre):
         actual = self.cabeza
         while actual != None:
             if nombre == actual.nombre:
-                return actual
+                return actual.nombre, actual.capacidad
             actual = actual.sig
 
     def imprimir(self):

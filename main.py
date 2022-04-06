@@ -97,7 +97,59 @@ def graficar():
     nombre=input('Ingrese nombre de la ciudad:')
     matrizaux=listaciudades.buscar(nombre)
     MatrizC.graficarciudad(nombre,matrizaux)
-                 
+
+
+def misionrescate():
+    nombre=input('Ingrese nombre de la ciudad:')
+    matrizaux=listaciudades.buscar(nombre)
+    disp=listarobots.buscar('ChapinRescue')
+    print(disp)
+    aux=matrizaux.encabezadof.primero
+    aux2=aux.acceso
+    cont=0
+    while aux != None:
+        cont+=1
+        while aux2 != None:
+            val=aux2.atributo
+            if val=='C' and disp != None:
+                print('Estos son los robots disponibles: ')
+                print(disp)
+                print('Se en contraron unidades civiles en ciudad {}: '.format(nombre))
+                busqrobots=input('Ingrese el nombre del robot para la mision: ')
+                robotres=listarobots.buscar2(busqrobots)
+                print(robotres)
+            else:
+                print('¡¡MISION IMPOSIBLE!!')
+            aux2=aux2.derecha
+        aux=aux.siguiente
+        if aux !=None:
+            aux2=aux.acceso
+    #MatrizC.misionR(nombre,matrizaux)
+    
+
+def misionextraccion():
+    nombre=input('Ingrese nombre de la ciudad:')
+    matrizaux=listaciudades.buscar(nombre)
+    disp=listarobots.buscar('ChapinFighter')
+    matrizrex=matrizaux.encabezadof.primero
+    aux=matrizrex.acceso
+    while matrizrex != None:
+        while aux!=None:
+            val=aux.atributo
+            if val=='R' and disp != None:
+                print('Estos son los robots disponibles: ')
+                print(disp.nombre)
+                print('Se en contraron unidades de recursos en ciudad {}: '.format(nombre))
+            else:
+                print('¡¡MISION IMPOSIBLE!!') 
+            aux=aux.derecha
+        matrizres=matrizres.siguiente
+        if matrizrex !=None:
+            aux=matrizrex.acceso
+
+
+        
+
 
                             
 
@@ -127,13 +179,16 @@ def menu():
         print(" 5.Salida ")
         print("————————————————————————")
         print(" >>Escoja una opcion")
-        opcion = int(input("Ingrese opción: "))
+        try:
+            opcion = int(input("Ingrese opción: "))
+        except:
+            print('Ingrese solo las opciones del menú')
         if opcion==1:
             openfile()
         elif opcion==2:
-            pass
+            misionrescate()
         elif opcion==3:
-           pass
+           misionextraccion()
         elif opcion==4:
             graficar()
         elif opcion==5:
